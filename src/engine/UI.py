@@ -106,4 +106,16 @@ class CustomButton:
 		# Drawing the image
 		self.surface.blit(self.image, (self.rect.x, self.rect.y))
 
+#---------------#
+# Imageloading  #
+#---------------#
 
+class Image:
+	def __init__(self,surface, image, imagex, imagey):
+		self.surface = surface
+		self.image = image
+		self.imagex = imagex
+		self.imagey = imagey
+
+	def draw(self):
+		self.surface.blit(self.image, (self.imagex, self.imagey))	
