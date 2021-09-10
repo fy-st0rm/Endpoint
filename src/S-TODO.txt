@@ -3,6 +3,17 @@
 [x] Animation system
 [x] Sprite handlers
 [] Particle system
-[] UI
+[x] UI
 [] Light
 [] Physics
+
+
+# Game
+[x] Cutscene manager
+[x] Player movement
+[] Menu system
+[] Planet generations
+[] Combat system
+[] Enemies
+
+

@@ -71,3 +71,39 @@ class Button:
 
 		text.draw(x, y)
 
+
+#---------------#
+# Custom Button #
+#---------------#
+
+class CustomButton:
+	def __init__(self, surface, rect, active_image, inactive_image):
+		self.surface = surface
+		self.rect = pygame.Rect(rect)
+		self.active_image = active_image
+		self.inactive_image = inactive_image
+
+		self.image = self.inactive_image
+		self.active = False
+
+	def is_clicked(self, event):
+		if self.active:
+			if event.type == pygame.MOUSEBUTTONDOWN:
+				if pygame.mouse.get_pressed()[0]:
+					return True
+		return False
+	
+	def draw(self):
+		mouse_pos = pygame.mouse.get_pos()
+
+		if self.rect.collidepoint(mouse_pos):
+			self.image = self.active_image
+			self.active = True
+		else:
+			self.image = self.inactive_image
+			self.active = False
+
+		# Drawing the image
+		self.surface.blit(self.image, (self.rect.x, self.rect.y))
+
+

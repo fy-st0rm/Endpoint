@@ -6,8 +6,9 @@ from entity.player import *
 #-----------------#
 
 class Game:
-	def __init__(self, surface):
+	def __init__(self, surface, scene_manager):
 		self.surface = surface
+		self.scene_manager = scene_manager
 		self.running = True
 
 		# Frames
@@ -23,8 +24,12 @@ class Game:
 			
 			if event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_ESCAPE:
-					self.cut_scene.stop()
+					self.running = False
 
+					# Changing the scene to main menu
+					self.scene_manager.change_scene("main_menu")
+					self.scene_manager.run_scene()
+	
 			self.player.event(event)
 
 	def run(self):
