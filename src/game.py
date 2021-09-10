@@ -6,8 +6,9 @@ from entity.player import *
 #-----------------#
 
 class Game:
-	def __init__(self, surface, scene_manager):
+	def __init__(self, surface, display, scene_manager):
 		self.surface = surface
+		self.display = display
 		self.scene_manager = scene_manager
 		self.running = True
 
@@ -15,7 +16,7 @@ class Game:
 		self.fps = 60
 		self.clock = pygame.time.Clock()
 
-		self.player = Player(self.surface, [100, 100])
+		self.player = Player(self.display, [100, 100])
 
 	def __event_handler(self):
 		for event in pygame.event.get():
@@ -36,11 +37,12 @@ class Game:
 		while self.running:
 			self.clock.tick(self.fps)
 
-			self.surface.fill((0, 0, 0))
+			self.display.fill((0, 0, 0))
 
 			self.__event_handler()
 		
 			self.player.draw()
-
+			
+			self.surface.blit(pygame.transform.scale(self.display, (self.surface.get_width(), self.surface.get_height())), (0, 0))
 			pygame.display.update()
 
