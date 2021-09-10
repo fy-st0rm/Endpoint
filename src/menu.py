@@ -9,22 +9,18 @@ class MainMenu:
 		self.running = True
 
 		#Menu details asset import
-		self.backgroundimage = pygame.image.load(os.path.join("../Res/sprites/backgroundimage.png"))
-		self.titleimage = pygame.image.load(os.path.join("../Res/sprites/titleimage.png"))
+		self.background_image = pygame.image.load(os.path.join("../Res/sprites/backgroundimage.png"))
+		self.title_image = pygame.image.load(os.path.join("../Res/sprites/titleimage.png"))
 
 		#Menu button asset import
-		self.buttonnormalimage =  pygame.image.load(os.path.join("../Res/sprites/ui/startnormal.png"))
-		self.buttonnonnormalimage =  pygame.image.load(os.path.join("../Res/sprites/ui/startnonnormal.png"))
-		self.quitnormalimage = pygame.image.load(os.path.join("../Res/sprites/ui/quitnormal.png"))
-		self.quitnonnormalimage = pygame.image.load(os.path.join("../Res/sprites/ui/quitnonnormal.png"))
+		self.button_sprites = Spritesheet(os.path.join("../Res/sprites/ui/buttons.png"))
 
-		#Background and label
-		self.background = Image(self.surface,self.backgroundimage, 0,0) 
-		self.title = Image(self.surface, self.titleimage, 10, 200)
-
+		self.play_buttons = self.button_sprites.load_strip([362, 0, 181, 47], 2)		
+		self.quit_buttons = self.button_sprites.load_strip([0, 0, 181, 47], 2)
+	
 		#Buttons
-		self.playbutton = CustomButton(self.surface, [30,250,184,46], self.buttonnonnormalimage, self.buttonnormalimage) 
-		self.quitbutton = CustomButton(self.surface, [30,300,184,46],  self.quitnormalimage, self.quitnonnormalimage)  
+		self.playbutton = CustomButton(self.surface, [30,250,184,46], self.play_buttons[0], self.play_buttons[1]) 
+		self.quitbutton = CustomButton(self.surface, [30,300,184,46],  self.quit_buttons[1], self.quit_buttons[0])  
 
 	def __event(self):
 		for event in pygame.event.get():
@@ -50,8 +46,8 @@ class MainMenu:
 			self.__event()
 			
 			#Label and bg stuff
-			self.background.draw()
-			self.title.draw()
+			self.surface.blit(self.background_image, (0, 0))
+			self.surface.blit(self.title_image, (10, 200))
 
 			#Buttons
 			self.playbutton.draw()
