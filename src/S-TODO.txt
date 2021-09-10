@@ -11,7 +11,8 @@
 # Game
 [x] Cutscene manager
 [x] Player movement
-[] Menu system
+[x] Menu system
+[] Camera
 [] Planet generations
 [] Combat system
 [] Enemies

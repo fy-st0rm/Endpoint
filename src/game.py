@@ -16,7 +16,8 @@ class Game:
 		self.fps = 60
 		self.clock = pygame.time.Clock()
 
-		self.player = Player(self.display, [100, 100])
+		self.camera = Camera(self.display)
+		self.player = Player(self.display, [100, 100], self.camera)
 
 	def __event_handler(self):
 		for event in pygame.event.get():
@@ -41,8 +42,11 @@ class Game:
 
 			self.__event_handler()
 		
+			self.camera.follow(self.player)
 			self.player.draw()
 			
+			pygame.draw.rect(self.display, (255, 0, 0), [100 - self.camera.pos[0], 100 - self.camera.pos[1], 30, 30]) 
+
 			self.surface.blit(pygame.transform.scale(self.display, (self.surface.get_width(), self.surface.get_height())), (0, 0))
 			pygame.display.update()
 

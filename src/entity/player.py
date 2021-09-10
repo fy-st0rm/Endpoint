@@ -3,9 +3,10 @@ import os
 
 
 class Player:
-	def __init__(self, surface, pos):
+	def __init__(self, surface, pos, camera):
 		self.surface = surface
 		self.pos = pos
+		self.camera = camera
 		
 		self.player_sprite = Spritesheet(os.path.join("../Res/sprites/player.png"))
 		self.player_size = [32, 32]
@@ -100,5 +101,5 @@ class Player:
 			self.frame = 0
 
 		image = self.current_animation[self.frame]
-		self.surface.blit(image, (self.pos[0], self.pos[1]))
+		self.surface.blit(image, (self.pos[0] - self.camera.pos[0], self.pos[1] - self.camera.pos[1]))
 
