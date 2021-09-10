@@ -1,10 +1,9 @@
 from engine import *
-from pygame import movie
+
 
 #-----------------#
 # Main Game Class #
 #-----------------#
-
 
 class Game:
 	def __init__(self, surface):
@@ -16,12 +15,17 @@ class Game:
 		self.clock = pygame.time.Clock()
 
 		# Trying video playing
-		self.movie = pygame.movie.Movie("../Res/test.mp4")
+		self.cut_scene = CutScene(self.surface, "../Res/test.mp4")
+		self.cut_scene.play()
 
 	def __event_handler(self):
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				self.running = False
+			
+			if event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_ESCAPE:
+					self.cut_scene.stop()
 
 	def run(self):
 		while self.running:
