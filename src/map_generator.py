@@ -2,7 +2,9 @@ from engine import *
 import random
 import math
 
-
+#------------------#
+# Planet structure #
+#------------------#
 
 class Planet:
 	def __init__(self, surface, sprite, pos, color):
@@ -16,13 +18,16 @@ class Planet:
 		print(self.color, self.climate, self.life)
 
 	def __generate_planets_info(self):
+		
+		# Climates cases according to the color of the planet
 		self.climates = {
 			"blue": random.choices(["cold", "temp"], weights=[0.5, 0.5], k=1),
 			"green": ["temp"],
 			"red": random.choices(["hot", "dry"], weights=[0.5, 0.5], k=1),
 			"purple": random.choices(["cold", "temp", "dry"], weights=[0.3, 0.4, 0.3], k=1)
 		}
-
+		
+		# Life form cases according to climatic conditions
 		self.life_form = {
 			"cold": [False],
 			"temp": [True],
@@ -36,6 +41,10 @@ class Planet:
 	def draw(self):	
 		self.surface.blit(pygame.transform.scale(self.sprite, (10, 10)), self.pos)
 
+
+#------------------------#
+# Map generation handler #
+#------------------------#
 
 class MapGenerator:
 	def __init__(self, surface, map_size, planets_amt):

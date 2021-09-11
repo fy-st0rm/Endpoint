@@ -12,8 +12,9 @@
 [x] Cutscene manager
 [x] Player movement
 [x] Menu system
-[] Camera
-[] Planet generations
+[x] Camera
+[x] Planet generations
+[] Mini map
 [] Combat system
 [] Enemies
 

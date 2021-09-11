@@ -1,6 +1,7 @@
 from engine import *
 from entity.player import *
 from map_generator import *
+from mini_map import *
 
 #-----------------#
 # Main Game Class #
@@ -18,11 +19,12 @@ class Game:
 		self.clock = pygame.time.Clock()
 
 		self.camera = Camera(self.display)
-		self.player = Player(self.display, [100, 100], self.camera)
 
 		# Map generations
 		self.map_generator = MapGenerator(self.display, 150, 25)
 
+		self.mini_map = MiniMap(self.surface, self.display, self.map_generator, self.camera)
+	
 	def __event_handler(self):
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
@@ -36,7 +38,7 @@ class Game:
 					self.scene_manager.change_scene("main_menu")
 					self.scene_manager.run_scene()
 	
-			self.player.event(event)
+			self.mini_map.event(event)
 
 	def __generation(self):
 		pygame.draw.circle(self.display, (255, 255, 255), self.pos, self.radius, 2)
@@ -53,6 +55,8 @@ class Game:
 			self.__event_handler()
 
 			self.map_generator.generate()
+
+			self.mini_map.draw()
 			
 			self.surface.blit(pygame.transform.scale(self.display, (self.surface.get_width(), self.surface.get_height())), (0, 0))
 			pygame.display.update()
