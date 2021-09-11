@@ -1,10 +1,9 @@
 
 class Camera:
-	def __init__(self, surface):
+	def __init__(self):
 		self.pos = [0, 0]
-		self.surface = surface
 
-	def follow(self, entity):
-		self.pos[0] += (entity.pos[0] - self.pos[0] - self.surface.get_width() / 2) / 10
-		self.pos[1] += (entity.pos[1] - self.pos[1] - self.surface.get_height() / 2) / 10
+	def follow(self, pos, size):
+		self.pos[0] += (pos[0] - self.pos[0] - size[0] / 2) / 10
+		self.pos[1] += (pos[1] - self.pos[1] - size[1] / 2) / 10
 
