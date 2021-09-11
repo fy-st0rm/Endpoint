@@ -5,8 +5,9 @@ import math
 
 
 class Planet:
-	def __init__(self, surface, pos, color):
+	def __init__(self, surface, sprite, pos, color):
 		self.surface = surface
+		self.sprite = sprite
 		self.pos = pos
 		self.color = color
 
@@ -29,15 +30,11 @@ class Planet:
 			"dry" : random.choices([True, False], weights=[0.3, 0.7], k=1)
 		}
 
-		self.climate = self.climates[self.color]
-		self.climate = self.climate[0]
-		
-		self.life = self.life_form[self.climate]
-		self.life = self.life[0]
+		self.climate = self.climates[self.color][0]	
+		self.life = self.life_form[self.climate][0]
 
-	def draw(self):
-		#[TODO] Draw actual pictures
-		pygame.draw.circle(self.surface, pygame.Color(self.color), self.pos, 2)
+	def draw(self):	
+		self.surface.blit(pygame.transform.scale(self.sprite, (10, 10)), self.pos)
 
 
 class MapGenerator:
@@ -46,8 +43,21 @@ class MapGenerator:
 		self.map_size = map_size
 		self.planets_amt = planets_amt
 
+		# Map memories
 		self.map_pos = (self.surface.get_width() / 2, self.surface.get_height() / 2)
 		self.planets = []
+
+		# Planet colors
+		self.colors = ["blue", "green", "purple", "red"]
+
+		# Planet sprites
+		self.planet_sprites = Spritesheet(os.path.join("../Res/sprites/planets.png"))
+		self.sprites = {
+			"blue": self.planet_sprites.load_image(0, 0, 100, 100),
+			"green": self.planet_sprites.load_image(1, 0, 100, 100),
+			"purple": self.planet_sprites.load_image(2, 0, 100, 100),
+			"red": self.planet_sprites.load_image(3, 0, 100, 100)
+		}
 
 		self.__generate_planets()
 
@@ -63,10 +73,11 @@ class MapGenerator:
 			pos = (self.map_pos[0] + adj, self.map_pos[1] + opp)
 
 			# Generating planets color
-			color = random.choice(["blue", "green", "red", "purple"])
+			color = random.choice(self.colors)
+			sprite = self.sprites[color]
 			
 			# Generating new planet instants
-			new_planet = Planet(self.surface, pos, color)
+			new_planet = Planet(self.surface, sprite, pos, color)
 
 			self.planets.append(new_planet)
 
