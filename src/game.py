@@ -1,5 +1,6 @@
 from engine import *
 from entity.player import *
+from map_generator import *
 
 #-----------------#
 # Main Game Class #
@@ -19,6 +20,9 @@ class Game:
 		self.camera = Camera(self.display)
 		self.player = Player(self.display, [100, 100], self.camera)
 
+		# Map generations
+		self.map_generator = MapGenerator(self.display, 150, 25)
+
 	def __event_handler(self):
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
@@ -34,6 +38,12 @@ class Game:
 	
 			self.player.event(event)
 
+	def __generation(self):
+		pygame.draw.circle(self.display, (255, 255, 255), self.pos, self.radius, 2)
+
+		for i in self.planets:
+			pygame.draw.circle(self.display, (0, 255, 255), i, 2)
+
 	def run(self):
 		while self.running:
 			self.clock.tick(self.fps)
@@ -41,12 +51,9 @@ class Game:
 			self.display.fill((0, 0, 0))
 
 			self.__event_handler()
-		
-			self.camera.follow(self.player)
-			self.player.draw()
-			
-			pygame.draw.rect(self.display, (255, 0, 0), [100 - self.camera.pos[0], 100 - self.camera.pos[1], 30, 30]) 
 
+			self.map_generator.generate()
+			
 			self.surface.blit(pygame.transform.scale(self.display, (self.surface.get_width(), self.surface.get_height())), (0, 0))
 			pygame.display.update()
 

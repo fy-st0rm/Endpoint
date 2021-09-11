@@ -23,7 +23,7 @@ if __name__ == "__main__":
 	pygame.init()
 
 	WIN_SIZE = (800, 600)
-	ZOOM_SIZE = (300, 188)
+	ZOOM_SIZE = (400, 300)
 
 	screen = pygame.display.set_mode(WIN_SIZE)
 	display = pygame.Surface(ZOOM_SIZE)
