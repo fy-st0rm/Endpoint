@@ -24,7 +24,7 @@ class Game:
 		# Map generations
 		self.map_generator = MapGenerator(self.display, self.camera, 150, 25)
 
-		self.mini_map = MiniMap(self.surface, self.display, self.map_generator, self.player)
+		self.mini_map = MiniMap(self.surface, self.display, self.map_generator, self.player, self.camera)
 	
 	def __event_handler(self):
 		for event in pygame.event.get():

@@ -2,11 +2,12 @@ from engine import *
 
 
 class MiniMap:
-	def __init__(self, screen, surface, map_generator, player):
+	def __init__(self, screen, surface, map_generator, player, game_camera):
 		self.screen = screen
 		self.surface = surface
 		self.map_generator = map_generator
 		self.player = player
+		self.game_camera = game_camera
 
 		self.camera = Camera()
 
@@ -76,16 +77,14 @@ class MiniMap:
 					self.open_map = True
 	
 	def __camera(self):
-		pos = self.player.pos.copy()
-		
-		pos[0] = (pos[0] / self.surface.get_width()) * 100
-		pos[1] = (pos[1] / self.surface.get_height()) * 100
-		
-		pos[0] = (pos[0] / 100) * self.size[0]
-		pos[1] = (pos[1] / 100) * self.size[1]
+		pos = self.game_camera.pos.copy()
+		pos[0] += 32
+		pos[1] += 32
 
 		self.camera.follow(pos, self.size)
-		pygame.draw.circle(self.frame, (255, 0, 0), (pos[0], pos[1]), 2)
+		self.camera.pos[0] /= 1.1
+		self.camera.pos[1] /= 1.1
+		pygame.draw.rect(self.frame, (255, 0, 0), [self.size[0]/2, self.size[1]/2, 2, 2])
 
 	def draw(self):
 		if self.open_map:
