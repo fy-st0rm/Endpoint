@@ -28,6 +28,9 @@ class MainMenu:
 				self.running = False
 
 			if self.playbutton.is_clicked(event):
+				#Fades the screen
+				self.FadeEffect(800, 600, 1)
+
 				self.running = False
 
 				# Changing the scene to the game
@@ -56,3 +59,30 @@ class MainMenu:
 
 			pygame.display.update()
 	
+	#Redraws stuff for faded effect
+	def redraw(self):
+		self.surface.fill((0, 0, 0))
+		#Label and bg stuff
+		self.surface.blit(self.background_image, (0, 0))
+		self.surface.blit(self.title_image, (10, 200))
+		#Buttons
+		self.playbutton.draw()
+		self.quitbutton.draw()
+
+		#Buttons
+		self.playbutton.draw()
+		self.quitbutton.draw()
+
+	#Fade effect function 	
+	def FadeEffect(self, width, height, delay):
+		self.width = width
+		self.height = height
+		self.delay = delay
+		self.fadeSurface = pygame.Surface((self.width, self.height))
+		self.fadeSurface.fill((0,0,0))
+		for alpha in range(0,255):
+			self.fadeSurface.set_alpha(alpha)
+			self.redraw()
+			self.surface.blit(self.fadeSurface, (0,0))
+			pygame.display.update()
+			pygame.time.delay(self.delay)
