@@ -2,7 +2,7 @@
 # Engine stuff
 [x] Animation system
 [x] Sprite handlers
-[] Particle system
+[x] Particle system	[Thanks rob ;3]
 [x] UI
 [] Light
 [] Physics
@@ -14,7 +14,9 @@
 [x] Menu system
 [x] Camera
 [x] Planet generations
-[] Mini map
+[x] Mini map
+[] Optimizing rendering system
+[] Minimap functionalities
 [] Combat system
 [] Enemies
 

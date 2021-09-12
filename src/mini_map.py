@@ -26,6 +26,9 @@ class MiniMap:
 		self.horizontal_speed = 5.6
 		self.vertical_speed = 4
 
+		# Planets rect
+		self.rects = []
+
 	def __open_map(self):
 		self.pos[0] -= self.horizontal_speed
 		if self.pos[0] <= 10:
@@ -64,10 +67,10 @@ class MiniMap:
 		mouse_pos = pygame.mouse.get_pos()
 		
 		# Scalling the mouse pos due to zoom
-		ratio_x = (self.screen.get_width() / self.surface.get_width())
-		ratio_y = (self.screen.get_height() / self.surface.get_height())
+		ratio_x = (self.screen.get_width() / self.frame.get_width())
+		ratio_y = (self.screen.get_height() / self.frame.get_height())
 		scaled_pos = (mouse_pos[0] / ratio_x, mouse_pos[1] / ratio_y)
-		
+
 		# Toggle of mini map
 		if event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_m:
@@ -76,6 +79,13 @@ class MiniMap:
 				else:
 					self.open_map = True
 	
+		if event.type == pygame.MOUSEBUTTONDOWN:
+			if pygame.mouse.get_pressed()[0]:
+				print(scaled_pos)
+				for i in self.rects:
+					if i.collidepoint(scaled_pos):
+						print(i)
+
 	def __camera(self):
 		# follow player when map is opened else use the game camera
 		if self.open_map:
@@ -109,6 +119,7 @@ class MiniMap:
 		pygame.draw.circle(self.frame, (255, 0, 0), (self.size[0]/2 - self.camera.pos[0], self.size[1]/2 - self.camera.pos[1]), self.map_generator.map_size/2, 1)
 		planets = self.map_generator.mini_planets
 
+		self.rects = []
 		for i in planets:
 			i.surface = self.frame
 			
@@ -116,7 +127,13 @@ class MiniMap:
 			i.pos[0] = i.pos_info[0] + self.size[0]/2
 			i.pos[1] = i.pos_info[1] + self.size[1]/2
 
+			self.rects.append(pygame.Rect(i.pos[0] - self.camera.pos[0], i.pos[1] - self.camera.pos[1], 10, 10))
+
 			i.draw(self.camera)
+
+
+		for i in self.rects:
+			pygame.draw.rect(self.frame, (255, 0, 0), i, 1)
 
 		self.surface.blit(self.frame, (self.pos[0], self.pos[1]))
 		

@@ -107,6 +107,7 @@ class MapGenerator:
 
 	def generate(self):
 		pygame.draw.circle(self.surface, (255, 255, 255), (self.map_pos[0] - self.camera.pos[0], self.map_pos[1] - self.camera.pos[1]), self.map_size, 1)
-
+		
+		#[TODO] Render the only visible planets
 		for planet in self.planets:
 			planet.draw(self.camera)

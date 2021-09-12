@@ -23,7 +23,7 @@ class Game:
 		self.player = Player(self.display, [self.display.get_width()/2, self.display.get_height()/2], self.camera)
 
 		# Map generations
-		self.map_generator = MapGenerator(self.display, self.camera, 150, 25)
+		self.map_generator = MapGenerator(self.display, self.camera, 500, 20)
 
 		self.mini_map = MiniMap(self.surface, self.display, self.map_generator, self.player, self.camera)
 		self.inventory = Inventory(self.display, 50 , 100)
@@ -47,25 +47,26 @@ class Game:
 			self.mini_map.event(event)
 			self.player.event(event)
 
+	def __render(self):
+		self.map_generator.generate()	
+		self.player.draw()
+
+		self.inventory.draw()
+		self.particle_generator.emmit()
+			
+		self.mini_map.draw()
+
 	def run(self):
 		while self.running:
 			self.clock.tick(self.fps)
 
 			self.display.fill((0, 0, 0))
 
-			self.__event_handler()
-
 			self.camera.follow(self.player.pos, [self.display.get_width(), self.display.get_height()])
-
-			self.map_generator.generate()
-			self.mini_map.draw()
-			self.inventory.draw()
-
-
-			self.player.draw()
-
-			self.particle_generator.emmit()
 			
+			self.__event_handler()
+			self.__render()
+
 			self.surface.blit(pygame.transform.scale(self.display, (self.surface.get_width(), self.surface.get_height())), (0, 0))
 			pygame.display.update()
 
