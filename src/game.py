@@ -29,6 +29,7 @@ class Game:
 		self.inventory = Inventory(self.display, 50 , 100)
 
 		self.particle_generator = particles(self.display, 100,100, (224, 145, 99), True, 0.1) 
+		
 
 	def __event_handler(self):
 		for event in pygame.event.get():
