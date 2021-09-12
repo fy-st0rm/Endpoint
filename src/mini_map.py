@@ -77,13 +77,20 @@ class MiniMap:
 					self.open_map = True
 	
 	def __camera(self):
-		pos = self.game_camera.pos.copy()
-		pos[0] += 32
-		pos[1] += 32
+		# follow player when map is opened else use the game camera
+		if self.open_map:
+			pos = self.player.pos.copy()
+		else:
+			pos = self.game_camera.pos.copy()
+
+			pos[0] += 32
+			pos[1] += 32
 
 		self.camera.follow(pos, self.size)
 		self.camera.pos[0] /= 1.1
 		self.camera.pos[1] /= 1.1
+
+		# Drawing the player point
 		pygame.draw.rect(self.frame, (255, 0, 0), [self.size[0]/2, self.size[1]/2, 2, 2])
 
 	def draw(self):
@@ -99,11 +106,16 @@ class MiniMap:
 		self.__camera()
 
 		# Rendering the map
-		pygame.draw.circle(self.frame, (255, 0, 0), (60/2 - self.camera.pos[0], 60/2 - self.camera.pos[1]), self.map_generator.map_size/2, 1)
-		planets = self.map_generator.mini_planets.copy()
+		pygame.draw.circle(self.frame, (255, 0, 0), (self.size[0]/2 - self.camera.pos[0], self.size[1]/2 - self.camera.pos[1]), self.map_generator.map_size/2, 1)
+		planets = self.map_generator.mini_planets
 
 		for i in planets:
 			i.surface = self.frame
+			
+			# Offsetting the miniature planets in the center
+			i.pos[0] = i.pos_info[0] + self.size[0]/2
+			i.pos[1] = i.pos_info[1] + self.size[1]/2
+
 			i.draw(self.camera)
 
 		self.surface.blit(self.frame, (self.pos[0], self.pos[1]))

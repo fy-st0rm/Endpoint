@@ -14,6 +14,8 @@ class Planet:
 		self.size = size
 		self.color = color
 
+		self.pos_info = self.pos.copy()
+
 		self.__generate_planets_info()
 
 	def __generate_planets_info(self):
@@ -89,7 +91,7 @@ class MapGenerator:
 			opp_mini = math.sin(ang) * hyp_mini
 
 			pos = [self.map_pos[0] + adj, self.map_pos[1] + opp]
-			pos_mini = [30 + adj_mini, 30 + opp_mini]
+			pos_mini = [adj_mini, opp_mini]
 
 			# Generating planets color
 			color = random.choice(self.colors)
