@@ -1,4 +1,5 @@
 import pygame
+import os
 from engine import*
 
 class Inventory:
@@ -16,7 +17,7 @@ class Inventory:
 		self.fuel_maxcapacity = 300
 
 
-		self.font = pygame.font.SysFont('Segio ui', 10)
+		self.font = pygame.font.SysFont("../Res/Font/FFFFORWA.ttf", 20)
 
 		#Importing 
 		self.resources_image = Spritesheet(os.path.join("../Res/sprites/resources.png"))
@@ -26,6 +27,8 @@ class Inventory:
 
 		self.darkcrystal_image[0] = pygame.transform.scale(self.darkcrystal_image[0], (20,20))
 		self.fuel_image[0] = pygame.transform.scale(self.fuel_image[0], (20,20))
+
+		self.controls_text = Text(self.surface, self.font, "[M] MAP", self.colorLight)
 		#self.fuel_image_rect = pygame.rect((0,20,20,10))
 
 
@@ -40,6 +43,8 @@ class Inventory:
 		pygame.draw.rect(self.surface, self.colorFuel, pygame.Rect((0,20,self.fuel_bar,10)))
 		self.surface.blit(self.darkcrystal_image[0], (0,0))	
 		self.surface.blit(self.fuel_image[0], (0,20))
+
+		self.controls_text.draw(0,270)
 
 
 
