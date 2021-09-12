@@ -2,6 +2,7 @@ from engine import *
 from entity.player import *
 from map_generator import *
 from mini_map import *
+from inventory import *
 
 #-----------------#
 # Main Game Class #
@@ -25,7 +26,8 @@ class Game:
 		self.map_generator = MapGenerator(self.display, self.camera, 150, 25)
 
 		self.mini_map = MiniMap(self.surface, self.display, self.map_generator, self.player, self.camera)
-	
+		self.inventory = Inventory(self.display, 50 , 100)
+
 	def __event_handler(self):
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
@@ -54,6 +56,8 @@ class Game:
 
 			self.map_generator.generate()
 			self.mini_map.draw()
+			self.inventory.draw()
+
 
 			self.player.draw()
 			
