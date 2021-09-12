@@ -28,6 +28,8 @@ class Game:
 		self.mini_map = MiniMap(self.surface, self.display, self.map_generator, self.player, self.camera)
 		self.inventory = Inventory(self.display, 50 , 100)
 
+		self.particle_generator = particles(self.display, 100,100, (224, 145, 99), True, 0.1) 
+
 	def __event_handler(self):
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
@@ -60,6 +62,8 @@ class Game:
 
 
 			self.player.draw()
+
+			self.particle_generator.emmit()
 			
 			self.surface.blit(pygame.transform.scale(self.display, (self.surface.get_width(), self.surface.get_height())), (0, 0))
 			pygame.display.update()
