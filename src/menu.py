@@ -6,11 +6,15 @@ class MainMenu:
 		self.surface = surface
 		self.scene_manager = scene_manager
 
+		# Capping the frame
+		self.fps = 60
+		self.clock = pygame.time.Clock()
+
 		#Animation stuff
 		self.animator = Animator()
 		self.frame = 0
 		self.planet_image = Spritesheet(os.path.join("../Res/sprites/Earthsprite.png"))
-		self.animation = self.animator.load_image(self.planet_image.load_strip([0, 0, 100, 100], 20), 0.5)
+		self.animation = self.animator.load_image(self.planet_image.load_strip([0, 0, 100, 100], 20), 1)
 
 		self.running = True
 
@@ -26,11 +30,7 @@ class MainMenu:
 	
 		#Buttons
 		self.playbutton = CustomButton(self.surface, [30,250,184,46], self.play_buttons[0], self.play_buttons[1]) 
-		self.quitbutton = CustomButton(self.surface, [30,300,184,46],  self.quit_buttons[1], self.quit_buttons[0])
-
-		
-		
-		
+		self.quitbutton = CustomButton(self.surface, [30,300,184,46],  self.quit_buttons[1], self.quit_buttons[0])	
 
 	def __event(self):
 		for event in pygame.event.get():
@@ -56,6 +56,7 @@ class MainMenu:
 
 	def run(self):
 		while self.running:
+			self.clock.tick(self.fps)
 			self.surface.fill((0, 0, 0))
 
 			self.__event()
